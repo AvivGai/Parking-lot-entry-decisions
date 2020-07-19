@@ -92,25 +92,19 @@ if __name__ == "__main__":
     connection = sqlite3.connect("parking_lot.db")
     cursor = connection.cursor()
     create_table(cursor)
-    print(len(sys.argv))
 
     for i in range(1, len(sys.argv)):
-        decision = ""
+        decision = "NO"
         reason = ""
         file = ocr_space_file(filename=sys.argv[i], language='eng')
         number = get_plate_number(file)
-        print(number)
         if check_if_public(number):
-            decision = "NO"
             reason = "PUBLIC TRANSPORTATION"
         elif check_if_military(number):
-            decision = "NO"
             reason = "MILITARY AND LAW"
         elif check_if_prohibited_last_two(number):
-            decision = "NO"
             reason = "LAST DIGITS"
         elif check_if_gas(number):
-            decision = "NO"
             reason = "GAS"
         else:
             decision = "YES"
